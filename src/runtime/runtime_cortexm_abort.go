@@ -1,5 +1,5 @@
-//go:build cortexm && !nxp && !qemu
-// +build cortexm,!nxp,!qemu
+//go:build !abort.bkpt && cortexm && !nxp && !qemu
+// +build !abort.bkpt,cortexm,!nxp,!qemu
 
 package runtime
 
