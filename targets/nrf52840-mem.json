@@ -1,0 +1,4 @@
+{
+	"inherits": ["nrf52840"],
+	"linkerscript": "targets/nrf52840-mem.ld"
+}
