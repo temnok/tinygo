@@ -15,7 +15,7 @@ HardFault_Handler:
     // functions again that expect a working stack. However, it will corrupt the
     // old stack so the function below must not attempt to recover from this
     // fault.
-    movs r3, #0
+    ldr r3, =__isr_vector
     ldr r3, [r3]
     mov sp, r3
 
