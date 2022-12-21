@@ -1,5 +1,5 @@
-//go:build nrf && nrf52840
-// +build nrf,nrf52840
+//go:build nrf && nrf52840 && !usb.none
+// +build nrf,nrf52840,!usb.none
 
 package runtime
 

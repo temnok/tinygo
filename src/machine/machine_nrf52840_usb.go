@@ -1,5 +1,5 @@
-//go:build nrf52840
-// +build nrf52840
+//go:build !usb.none && nrf52840
+// +build !usb.none,nrf52840
 
 package machine
 
