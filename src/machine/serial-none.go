@@ -1,5 +1,5 @@
-//go:build baremetal && serial.none
-// +build baremetal,serial.none
+//go:build baremetal && serial.none && !serial.mem
+// +build baremetal,serial.none,!serial.mem
 
 package machine
 
