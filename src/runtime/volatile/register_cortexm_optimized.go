@@ -4,7 +4,7 @@
 package volatile
 
 import (
-	"device/arm"
+	"device"
 	"unsafe"
 )
 
@@ -23,7 +23,7 @@ type Register8 struct {
 //
 //go:inline
 func (r *Register8) Get() uint8 {
-	return uint8(arm.AsmFull("ldrb {}, [{ptr}]", map[string]interface{}{
+	return uint8(device.AsmFull("ldrb {}, [{ptr}]", map[string]any{
 		"ptr": uintptr(unsafe.Pointer(r)),
 	}))
 }
@@ -34,7 +34,7 @@ func (r *Register8) Get() uint8 {
 //
 //go:inline
 func (r *Register8) Set(value uint8) {
-	arm.AsmFull("strb {val}, [{ptr}]", map[string]interface{}{
+	device.AsmFull("strb {val}, [{ptr}]", map[string]any{
 		"val": value,
 		"ptr": uintptr(unsafe.Pointer(r)),
 	})
@@ -90,7 +90,7 @@ type Register16 struct {
 //
 //go:inline
 func (r *Register16) Get() uint16 {
-	return uint16(arm.AsmFull("ldrh {}, [{ptr}]", map[string]interface{}{
+	return uint16(device.AsmFull("ldrh {}, [{ptr}]", map[string]any{
 		"ptr": uintptr(unsafe.Pointer(r)),
 	}))
 }
@@ -101,7 +101,7 @@ func (r *Register16) Get() uint16 {
 //
 //go:inline
 func (r *Register16) Set(value uint16) {
-	arm.AsmFull("strh {val}, [{ptr}]", map[string]interface{}{
+	device.AsmFull("strh {val}, [{ptr}]", map[string]any{
 		"val": value,
 		"ptr": uintptr(unsafe.Pointer(r)),
 	})
@@ -157,7 +157,7 @@ type Register32 struct {
 //
 //go:inline
 func (r *Register32) Get() uint32 {
-	return uint32(arm.AsmFull("ldr {}, [{ptr}]", map[string]interface{}{
+	return uint32(device.AsmFull("ldr {}, [{ptr}]", map[string]any{
 		"ptr": uintptr(unsafe.Pointer(r)),
 	}))
 }
@@ -168,7 +168,7 @@ func (r *Register32) Get() uint32 {
 //
 //go:inline
 func (r *Register32) Set(value uint32) {
-	arm.AsmFull("str {val}, [{ptr}]", map[string]interface{}{
+	device.AsmFull("str {val}, [{ptr}]", map[string]any{
 		"val": value,
 		"ptr": uintptr(unsafe.Pointer(r)),
 	})
@@ -224,7 +224,7 @@ type Register64 struct {
 //
 //go:inline
 func (r *Register64) Get() uint64 {
-	return uint64(arm.AsmFull("ldrd {}, [{ptr}]", map[string]interface{}{
+	return uint64(device.AsmFull("ldrd {}, [{ptr}]", map[string]any{
 		"ptr": uintptr(unsafe.Pointer(r)),
 	}))
 }
@@ -235,7 +235,7 @@ func (r *Register64) Get() uint64 {
 //
 //go:inline
 func (r *Register64) Set(value uint64) {
-	arm.AsmFull("strd {val}, [{ptr}]", map[string]interface{}{
+	device.AsmFull("strd {val}, [{ptr}]", map[string]any{
 		"val": value,
 		"ptr": uintptr(unsafe.Pointer(r)),
 	})
