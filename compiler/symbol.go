@@ -214,13 +214,13 @@ func (c *compilerContext) getFunctionInfo(f *ssa.Function) functionInfo {
 		linkName: f.RelString(nil),
 	}
 	// Check for //go: pragmas, which may change the link name (among others).
-	info.parsePragmas(f)
+	info.parsePragmas(f, c.Config)
 	return info
 }
 
 // parsePragmas is used by getFunctionInfo to parse function pragmas such as
 // //export or //go:noinline.
-func (info *functionInfo) parsePragmas(f *ssa.Function) {
+func (info *functionInfo) parsePragmas(f *ssa.Function, config *Config) {
 	if f.Syntax() == nil {
 		return
 	}
@@ -308,6 +308,9 @@ func (info *functionInfo) parsePragmas(f *ssa.Function) {
 			}
 		}
 
+		if config.GlobalNoinline {
+			info.inline = inlineNone
+		}
 	}
 }
 

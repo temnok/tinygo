@@ -1338,6 +1338,7 @@ func main() {
 	cpuprofile := flag.String("cpuprofile", "", "cpuprofile output")
 	monitor := flag.Bool("monitor", false, "enable serial monitor")
 	baudrate := flag.Int("baudrate", 115200, "baudrate of serial monitor")
+	globalNoinline := flag.Bool("global-noinline", false, "disable inlining")
 
 	var flagJSON, flagDeps, flagTest bool
 	if command == "help" || command == "list" || command == "info" || command == "build" {
@@ -1429,6 +1430,7 @@ func main() {
 		PrintJSON:       flagJSON,
 		Monitor:         *monitor,
 		BaudRate:        *baudrate,
+		GlobalNoinline:  *globalNoinline,
 	}
 	if *printCommands {
 		options.PrintCommands = printCommand
