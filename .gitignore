@@ -33,4 +33,6 @@ test.nro
 test.wasm
 wasm.wasm
 
+/lib/compiler-rt-builtins
 /.idea
+/bin/*
