@@ -1271,10 +1271,10 @@ func writeGoRegisterBitfieldType(w *bufio.Writer, register *PeripheralField, per
 
 	for _, bitfield := range register.Bitfields {
 		idxArg := ""
-		regAccess := "&o." + registerName + ".Reg"
+		regAccess := "o." + registerName
 		if register.Array != -1 {
 			idxArg = "idx int, "
-			regAccess = "&o." + registerName + "[idx].Reg"
+			regAccess = "o." + registerName + "[idx]"
 		}
 		var funcSuffix string
 		if maxMask == bitfield.Mask || registerName == bitfield.Name {
@@ -1284,20 +1284,20 @@ func writeGoRegisterBitfieldType(w *bufio.Writer, register *PeripheralField, per
 		}
 		fmt.Fprintf(w, "func (o *%s) Set%s(%s value uint%d) {\n", typeName, funcSuffix, idxArg, bitSize)
 		if maxMask == bitfield.Mask {
-			fmt.Fprintf(w, "\tvolatile.StoreUint%d(%s, value)\n", bitSize, regAccess)
+			fmt.Fprintf(w, "\t%s.Set(value)\n", regAccess)
 		} else if bitfield.Offset > 0 {
-			fmt.Fprintf(w, "\tvolatile.StoreUint%d(%s, volatile.LoadUint%d(%s)&^(0x%x)|value<<%d)\n", bitSize, regAccess, bitSize, regAccess, bitfield.Mask, bitfield.Offset)
+			fmt.Fprintf(w, "\t%s.Set(%s.Get()&^(0x%x)|value<<%d)\n", regAccess, regAccess, bitfield.Mask, bitfield.Offset)
 		} else {
-			fmt.Fprintf(w, "\tvolatile.StoreUint%d(%s, volatile.LoadUint%d(%s)&^(0x%x)|value)\n", bitSize, regAccess, bitSize, regAccess, bitfield.Mask)
+			fmt.Fprintf(w, "\t%s.Set(%s.Get()&^(0x%x)|value)\n", regAccess, regAccess, bitfield.Mask)
 		}
 		w.WriteString("}\n")
 		fmt.Fprintf(w, "func (o *%s) Get%s(%s) uint%d {\n", typeName, funcSuffix, idxArg, bitSize)
 		if maxMask == bitfield.Mask {
-			fmt.Fprintf(w, "\treturn volatile.LoadUint%d(%s)\n", bitSize, regAccess)
+			fmt.Fprintf(w, "\treturn %s.Get()\n", regAccess)
 		} else if bitfield.Offset > 0 {
-			fmt.Fprintf(w, "\treturn (volatile.LoadUint%d(%s)&0x%x) >> %d\n", bitSize, regAccess, bitfield.Mask, bitfield.Offset)
+			fmt.Fprintf(w, "\treturn (%s.Get()&0x%x) >> %d\n", regAccess, bitfield.Mask, bitfield.Offset)
 		} else {
-			fmt.Fprintf(w, "\treturn volatile.LoadUint%d(%s)&0x%x\n", bitSize, regAccess, bitfield.Mask)
+			fmt.Fprintf(w, "\treturn %s.Get()&0x%x\n", regAccess, bitfield.Mask)
 		}
 		w.WriteString("}\n")
 	}
