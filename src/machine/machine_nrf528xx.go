@@ -143,23 +143,27 @@ func (spi SPI) Configure(config SPIConfig) {
 
 	// Pick a default frequency.
 	if config.Frequency == 0 {
-		config.Frequency = 4000000 // 4MHz
+		config.Frequency = 4_000_000 // 4MHz
 	}
 
 	// set frequency
 	var freq uint32
 	switch {
-	case config.Frequency >= 8000000:
+	case config.Frequency >= 32_000_000:
+		freq = 0x14000000 // nrf.SPIM_FREQUENCY_FREQUENCY_M32
+	case config.Frequency >= 16_000_000:
+		freq = 0xa000000 // nrf.SPIM_FREQUENCY_FREQUENCY_M16
+	case config.Frequency >= 8_000_000:
 		freq = nrf.SPIM_FREQUENCY_FREQUENCY_M8
-	case config.Frequency >= 4000000:
+	case config.Frequency >= 4_000_000:
 		freq = nrf.SPIM_FREQUENCY_FREQUENCY_M4
-	case config.Frequency >= 2000000:
+	case config.Frequency >= 2_000_000:
 		freq = nrf.SPIM_FREQUENCY_FREQUENCY_M2
-	case config.Frequency >= 1000000:
+	case config.Frequency >= 1_000_000:
 		freq = nrf.SPIM_FREQUENCY_FREQUENCY_M1
-	case config.Frequency >= 500000:
+	case config.Frequency >= 500_000:
 		freq = nrf.SPIM_FREQUENCY_FREQUENCY_K500
-	case config.Frequency >= 250000:
+	case config.Frequency >= 250_000:
 		freq = nrf.SPIM_FREQUENCY_FREQUENCY_K250
 	default: // below 250kHz, default to the lowest speed available
 		freq = nrf.SPIM_FREQUENCY_FREQUENCY_K125
