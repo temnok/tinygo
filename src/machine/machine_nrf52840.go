@@ -33,3 +33,8 @@ var (
 	PWM2 = &PWM{PWM: nrf.PWM2}
 	PWM3 = &PWM{PWM: nrf.PWM3}
 )
+
+// SPI
+var (
+	SPI3 = SPI{Bus: nrf.SPIM3, buf: new([1]byte)}
+)
