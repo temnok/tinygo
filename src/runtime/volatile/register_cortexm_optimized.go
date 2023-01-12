@@ -17,6 +17,11 @@ type Register8 struct {
 	Reg uint8
 }
 
+//go:inline
+func (r *Register8) Address() uint32 {
+	return uint32(uintptr(unsafe.Pointer(r)))
+}
+
 // Get returns the value in the register. It is the volatile equivalent of:
 //
 //	*r.Reg
@@ -82,6 +87,11 @@ func (r *Register8) ReplaceBits(value uint8, mask uint8, pos uint8) {
 
 type Register16 struct {
 	Reg uint16
+}
+
+//go:inline
+func (r *Register16) Address() uint32 {
+	return uint32(uintptr(unsafe.Pointer(r)))
 }
 
 // Get returns the value in the register. It is the volatile equivalent of:
@@ -151,6 +161,11 @@ type Register32 struct {
 	Reg uint32
 }
 
+//go:inline
+func (r *Register32) Address() uint32 {
+	return uint32(uintptr(unsafe.Pointer(r)))
+}
+
 // Get returns the value in the register. It is the volatile equivalent of:
 //
 //	*r.Reg
@@ -216,6 +231,11 @@ func (r *Register32) ReplaceBits(value uint32, mask uint32, pos uint8) {
 
 type Register64 struct {
 	Reg uint64
+}
+
+//go:inline
+func (r *Register64) Address() uint32 {
+	return uint32(uintptr(unsafe.Pointer(r)))
 }
 
 // Get returns the value in the register. It is the volatile equivalent of:
